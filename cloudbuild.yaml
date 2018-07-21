@@ -2,7 +2,7 @@ steps:
 - name: 'gcr.io/cloud-builders/docker'
   args: [ 'build', '-t', 'eu.gcr.io/$PROJECT_ID/$REPO_NAME:$COMMIT_SHA', '.' ]
 - name: 'gcr.io/cloud-builder/docker'
-  args: [ 'run', '-e', 'OMDB_API_KEY=9f6ac5fb', 'eu.gcr.io/$PROJECT_ID/$REPO_NAME:$COMMIT_SHA', 'yarn test']
+  args: [ 'run', 'eu.gcr.io/$PROJECT_ID/$REPO_NAME:$COMMIT_SHA', 'yarn test']
 - name: 'gcr.io/cloud-builders/docker'
   args: ['push', 'eu.gcr.io/$PROJECT_ID/$REPO_NAME:$COMMIT_SHA']
 images:
