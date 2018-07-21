@@ -30,4 +30,8 @@ router.get('/health', async ctx => {
   };
 });
 
+router.get('/', async ctx => {
+  ctx.body = { version: process.env.API_VERSION || 'dev' };
+});
+
 export const routes = router.routes();
