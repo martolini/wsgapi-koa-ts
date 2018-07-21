@@ -18,10 +18,10 @@ const instance = axios.create({
 });
 
 interface IOMDBConfig {
-  apiKey: string;
-  r: string;
-  plot: string;
-  type: string;
+  r?: string;
+  plot?: string;
+  type?: string;
+  s: string; // search param
 }
 
 instance.defaults.params = {
