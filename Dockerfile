@@ -16,4 +16,4 @@ EXPOSE 8001
 
 RUN yarn build-server
 
-CMD ["node", "dist/server.js"]
+CMD ["yarn", "start"]
