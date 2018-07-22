@@ -61,15 +61,15 @@ async function _search(params: IOMDBConfig) {
     params,
   });
   const deprecatedBody = result.data;
-  const data: ISearchResult[] = deprecatedBody.Search.map(
-    (elem: IOMDBSearchResult) => ({
-      title: elem.Title,
-      posterURL: elem.Poster,
-      type: elem.Type,
-      year: elem.Year,
-      imdbID: elem.imdbID,
-    })
-  );
+  const data: ISearchResult[] = deprecatedBody.Search
+    ? deprecatedBody.Search.map((elem: IOMDBSearchResult) => ({
+        title: elem.Title,
+        posterURL: elem.Poster,
+        type: elem.Type,
+        year: elem.Year,
+        imdbID: elem.imdbID,
+      }))
+    : [];
   return {
     ...deprecatedBody,
     data,
