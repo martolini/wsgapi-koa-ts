@@ -1,20 +1,21 @@
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: koa-api-ingress
+  name: api-koa-i
   annotations:
-    kubernetes.io/ingress.global-static-ip-name: "api-wsg-msroed-app"
-    # kubernetes.io/tls-acme: "true"
+    kubernetes.io/ingress.global-static-ip-name: api-koa-ip
+    kubernetes.io/tls-acme: "true"
+    kubernetes.io/ingress.class: "gce"
 spec:
-  # tls:
-  # - hosts: 
-    # - wsg.api.msroed.app
-    # secretName: wsg-api-msroed-app-tls
-  backend:
-    serviceName: api-koa-service
-    servicePort: 8001
-
-    # - host: wsg.api.msroed.app
-    # http:
-    #   paths:
-    #   - path: /*
+  tls:
+    - hosts:
+      - api.wsg.msroed.app
+      secretName: api-koa-tls
+  rules:
+    - host: api.wsg.msroed.app
+      http:
+        paths:
+        - path: /*
+          backend:
+            serviceName: api-koa-service
+            servicePort: 8001
