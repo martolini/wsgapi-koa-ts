@@ -24,6 +24,22 @@ interface IOMDBConfig {
   s: string; // search param
 }
 
+interface IOMDBSearchResult {
+  Poster: string;
+  Title: string;
+  Type: string;
+  Year: string;
+  imdbID: String;
+}
+
+interface ISearchResult {
+  posterUrl?: string;
+  title: string;
+  type: string;
+  year: string;
+  imdbID: string;
+}
+
 instance.defaults.params = {
   apiKey: process.env.OMDB_API_KEY,
   r: 'json',
@@ -44,7 +60,20 @@ async function _search(params: IOMDBConfig) {
     method: 'get',
     params,
   });
-  return result.data;
+  const deprecatedBody = result.data;
+  const data: ISearchResult[] = deprecatedBody.Search.map(
+    (elem: IOMDBSearchResult) => ({
+      title: elem.Title,
+      posterURL: elem.Poster,
+      type: elem.Type,
+      year: elem.Year,
+      imdbID: elem.imdbID,
+    })
+  );
+  return {
+    ...deprecatedBody,
+    data,
+  };
 }
 
 interface IEpisode {
