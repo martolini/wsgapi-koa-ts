@@ -22,6 +22,8 @@ spec:
       - env:
         - name: OMDB_API_KEY
           value: 9f6ac5fb
+        - name: REDIS_HOST
+          value: redis
         image: eu.gcr.io/tvshow-rating/api
         env:
           - name: OMDB_API_KEY
