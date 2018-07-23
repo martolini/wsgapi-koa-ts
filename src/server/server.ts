@@ -2,6 +2,7 @@ import * as Koa from 'koa';
 import * as cors from '@koa/cors';
 
 import { logger } from './logging';
+import { config } from './config';
 import { routes } from './routes';
 import * as cache from 'koa-redis-cache';
 
@@ -21,6 +22,9 @@ app.use(
   cache({
     routes: ['/show/:id', '/get:id', '/search(.*)'],
     expire: 60 * 60 * 24, // one day
+    redis: {
+      host: config.redisHost,
+    },
   })
 );
 app.use(routes);

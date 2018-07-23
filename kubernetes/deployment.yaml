@@ -19,18 +19,15 @@ spec:
         run: api-koa
     spec:
       containers:
-      - env:
-        - name: OMDB_API_KEY
-          value: 9f6ac5fb
-        - name: REDIS_HOST
-          value: redis
-        image: eu.gcr.io/tvshow-rating/api
+      - image: eu.gcr.io/tvshow-rating/api
         env:
           - name: OMDB_API_KEY
             valueFrom:
               secretKeyRef:
                 name: omdb-api-key
                 key: key
+          - name: REDIS_HOST
+            value: redis
         imagePullPolicy: Always
         name: api-koa
         ports:
