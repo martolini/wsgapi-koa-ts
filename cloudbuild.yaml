@@ -1,14 +1,14 @@
 steps:
-  - name: 'gcr.io/google-appengine/yarn'
+  - name: 'gcr.io/cloud-builders/yarn'
     entrypoint: yarn
     args: ['install']
-  - name: 'gcr.io/google-appengine/yarn'
+  - name: 'gcr.io/cloud-builders/yarn'
     entrypoint: yarn
     args: ['test']
-  - name: 'gcr.io/google-appengine/yarn'
+  - name: 'gcr.io/cloud-builders/yarn'
     entrypoint: yarn
     args: ['build-server']
-  - name: 'gcr.io/google-appengine/yarn'
+  - name: 'gcr.io/cloud-builders/yarn'
     entrypoint: echo
     args: ['OMDB_API_KEY=$_OMDB_API_KEY', '>', '.env']
   - name: 'gcr.io/cloud-builders/gcloud'
