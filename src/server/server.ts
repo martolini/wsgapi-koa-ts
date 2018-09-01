@@ -19,6 +19,7 @@ async function responseTimeMiddleware(ctx: Koa.Context, next: () => {}) {
 }
 
 app.use(cors());
+app.use(cacheControl);
 app.use(responseTimeMiddleware);
 app.use(logger);
 app.use(routes);
