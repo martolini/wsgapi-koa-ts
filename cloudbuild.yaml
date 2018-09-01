@@ -7,4 +7,6 @@ steps:
     args: ['test']
   - name: 'node:9'
     entrypoint: yarn
-    args: ['deploy']
+    args: ['build-server']
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args: ['app', 'deploy', '--version', '$SHORT_SHA']
