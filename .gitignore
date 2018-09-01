@@ -3,3 +3,4 @@ dist
 package-lock.json
 yarn-error.log
 yarn-error.log
+.env

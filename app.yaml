@@ -1,0 +1,5 @@
+runtime: nodejs
+env: flex
+service: default
+skip_files:
+  - cloudbuild.yaml

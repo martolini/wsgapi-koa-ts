@@ -1,10 +1,13 @@
+import * as dotenv from 'dotenv';
+dotenv.config();
+
 export interface Config {
   port: number;
   prettyLog: boolean;
 }
 
 const config: Config = {
-  port: +process.env.port || 3000,
+  port: +process.env.PORT || 8080,
   prettyLog: process.env.NODE_ENV !== 'production',
 };
 

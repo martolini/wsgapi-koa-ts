@@ -1,19 +1,18 @@
 steps:
-- name: 'gcr.io/cloud-builders/yarn'
-  args: ['install']
-- name: 'gcr.io/cloud-builders/yarn'
-  args: ['test']
-- name: 'gcr.io/cloud-builders/docker'
-  args: [ 'build', '-t', 'eu.gcr.io/$PROJECT_ID/$REPO_NAME:$SHORT_SHA', '.' ]
-- name: 'gcr.io/cloud-builders/docker'
-  args: ['push', 'eu.gcr.io/$PROJECT_ID/$REPO_NAME:$SHORT_SHA']
-- name: 'gcr.io/cloud-builders/kubectl'
-  args:
-  - set
-  - image
-  - deployment
-  - api-koa
-  - api-koa=eu.gcr.io/$PROJECT_ID/$REPO_NAME:$SHORT_SHA
-  env:
-  - 'CLOUDSDK_COMPUTE_ZONE=europe-west1-b'
-  - 'CLOUDSDK_CONTAINER_CLUSTER=cluster-1'
+  - name: 'gcr.io/cloud-builders/yarn'
+    entrypoint: yarn
+    args: ['install']
+  - name: 'gcr.io/cloud-builders/yarn'
+    entrypoint: yarn
+    args: ['test']
+  - name: 'gcr.io/cloud-builders/yarn'
+    entrypoint: yarn
+    args: ['build-server']
+  - name: 'gcr.io/cloud-builders/yarn'
+    entrypoint: echo
+    args: ['OMDB_API_KEY=$_OMDB_API_KEY', '>', '.env']
+  - name: 'gcr.io/cloud-builders/gcloud'
+    entrypoint: rm
+    args: ['cloudbuild.yaml']
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args: ['app', 'deploy', '--version', '$SHORT_SHA', '--quiet']
