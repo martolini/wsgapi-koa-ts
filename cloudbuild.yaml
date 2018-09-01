@@ -1,19 +1,11 @@
 steps:
-- name: 'gcr.io/cloud-builders/yarn'
-  args: ['install']
-- name: 'gcr.io/cloud-builders/yarn'
-  args: ['test']
-- name: 'gcr.io/cloud-builders/docker'
-  args: [ 'build', '-t', 'eu.gcr.io/$PROJECT_ID/$REPO_NAME:$SHORT_SHA', '.' ]
-- name: 'gcr.io/cloud-builders/docker'
-  args: ['push', 'eu.gcr.io/$PROJECT_ID/$REPO_NAME:$SHORT_SHA']
-- name: 'gcr.io/cloud-builders/kubectl'
-  args:
-  - set
-  - image
-  - deployment
-  - api-koa
-  - api-koa=eu.gcr.io/$PROJECT_ID/$REPO_NAME:$SHORT_SHA
-  env:
-  - 'CLOUDSDK_COMPUTE_ZONE=europe-west1-b'
-  - 'CLOUDSDK_CONTAINER_CLUSTER=cluster-1'
+  - name: 'gcr.io/cloud-builders/yarn'
+    args: ['install']
+  - name: 'gcr.io/cloud-builders/yarn'
+    args: ['test']
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', '${_IMAGE}', '.']
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', '${_IMAGE}']
+substitutions:
+  _IMAGE: 'eu.gcr.io/$PROJECT_ID/$REPO_NAME:$SHORT_SHA'
