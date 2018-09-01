@@ -1,14 +1,14 @@
 steps:
-  - name: 'node:9'
+  - name: 'node:10'
     entrypoint: yarn
     args: ['install', '--registry', 'https://yarn.npmjs.org']
-  - name: 'node:9'
+  - name: 'node:10'
     entrypoint: yarn
     args: ['test']
-  - name: 'node:9'
+  - name: 'node:10'
     entrypoint: yarn
     args: ['build-server']
-  - name: 'node:9'
+  - name: 'node:10'
     entrypoint: echo
     args: ['OMDB_API_KEY=$_OMDB_API_KEY', '>', '.env']
   - name: 'gcr.io/cloud-builders/gcloud'
