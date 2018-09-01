@@ -3,3 +3,7 @@ env: flex
 service: default
 skip_files:
   - cloudbuild.yaml
+
+endpoints_api_service:
+  name: api.wsg.msroed.app
+  rollout_strategy: managed
