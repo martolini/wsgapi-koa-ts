@@ -1,11 +1,9 @@
 steps:
-  - name: 'gcr.io/cloud-builders/yarn'
+  - name: 'node:9'
+    entrypoint: yarn
     args: ['install']
-  - name: 'gcr.io/cloud-builders/yarn'
+  - name: 'node:9'
+    entrypoint: yarn
     args: ['test']
-  - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', '${_IMAGE}', '.']
-  - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', '${_IMAGE}']
-substitutions:
-  _IMAGE: 'eu.gcr.io/$PROJECT_ID/$REPO_NAME:$SHORT_SHA'
+  - name: gcr.io/cloud-builders/gcloud
+    args: ['app', 'deploy']
