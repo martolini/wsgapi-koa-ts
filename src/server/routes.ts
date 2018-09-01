@@ -8,7 +8,12 @@ router.get('/shows/search', async ctx => {
   if (!s) {
     ctx.throw('Send a search query with ?s=', 400);
   }
-  ctx.body = await omdb.search(ctx.query);
+  try {
+    ctx.body = await omdb.search(ctx.query);
+  } catch (ex) {
+    console.error(ex);
+    ctx.throw(ex.message);
+  }
 });
 
 const getShow = async (ctx: Router.IRouterContext) => {
