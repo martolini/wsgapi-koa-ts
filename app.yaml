@@ -5,5 +5,5 @@ skip_files:
   - cloudbuild.yaml
 
 endpoints_api_service:
-  name: api.wsg.msroed.app
+  name: tvshow-rating.appspot.com
   rollout_strategy: managed
