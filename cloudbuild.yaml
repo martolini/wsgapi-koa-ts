@@ -1,14 +1,14 @@
 steps:
-  - name: 'node:9'
+  - name: 'gcr.io/google-appengine/nodejs'
     entrypoint: yarn
     args: ['install']
-  - name: 'node:9'
+  - name: 'gcr.io/google-appengine/nodejs'
     entrypoint: yarn
     args: ['test']
-  - name: 'node:9'
+  - name: 'gcr.io/google-appengine/nodejs'
     entrypoint: yarn
     args: ['build-server']
-  - name: 'node:9'
+  - name: 'gcr.io/google-appengine/nodejs'
     entrypoint: echo
     args: ['OMDB_API_KEY=$_OMDB_API_KEY', '>', '.env']
   - name: 'gcr.io/cloud-builders/gcloud'
