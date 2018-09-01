@@ -1,7 +1,6 @@
 import * as cors from '@koa/cors';
 import * as Koa from 'koa';
 
-import { config } from './config';
 import { logger } from './logging';
 import { routes } from './routes';
 
