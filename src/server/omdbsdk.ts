@@ -17,22 +17,22 @@ const instance = axios.create({
   timeout: 4000,
 });
 
-interface IOMDBConfig {
+interface OMDBConfig {
   r?: string;
   plot?: string;
   type?: string;
   s: string; // search param
 }
 
-interface IOMDBSearchResult {
+interface OMDBSearchResult {
   Poster: string;
   Title: string;
   Type: string;
   Year: string;
-  imdbID: String;
+  imdbID: string;
 }
 
-interface ISearchResult {
+interface SearchResult {
   posterUrl?: string;
   title: string;
   type: string;
@@ -42,12 +42,12 @@ interface ISearchResult {
 
 instance.defaults.params = {
   apiKey: process.env.OMDB_API_KEY,
-  r: 'json',
   plot: 'short',
+  r: 'json',
   type: 'series',
 };
 
-function configure(opts: IOMDBConfig) {
+function configure(opts: OMDBConfig): OMDBConfig {
   instance.defaults.params = {
     ...instance.defaults.params,
     ...opts,
@@ -55,19 +55,19 @@ function configure(opts: IOMDBConfig) {
   return instance.defaults.params;
 }
 
-async function _search(params: IOMDBConfig) {
+async function _search(params: OMDBConfig): Promise<OMDBSearchResult> {
   const result = await instance({
     method: 'get',
     params,
   });
   const deprecatedBody = result.data;
-  const data: ISearchResult[] = deprecatedBody.Search
-    ? deprecatedBody.Search.map((elem: IOMDBSearchResult) => ({
-        title: elem.Title,
+  const data: SearchResult[] = deprecatedBody.Search
+    ? deprecatedBody.Search.map((elem: OMDBSearchResult) => ({
+        imdbID: elem.imdbID,
         posterURL: elem.Poster,
+        title: elem.Title,
         type: elem.Type,
         year: elem.Year,
-        imdbID: elem.imdbID,
       }))
     : [];
   return {
@@ -76,7 +76,7 @@ async function _search(params: IOMDBConfig) {
   };
 }
 
-interface IEpisode {
+interface Episode {
   imdbRating: number;
   season: number;
   episode: number;
@@ -95,21 +95,21 @@ async function _getEpisodes(imdbID: string) {
     const res = await instance({
       method: 'get',
       params: {
-        i: imdbID,
         Season: i + 1,
+        i: imdbID,
       },
     });
     return res.data.Episodes;
   });
   const seasons = await Promise.all(promises);
-  const episodes: IEpisode[] = [];
+  const episodes: Episode[] = [];
   seasons.forEach((season, i) => {
-    season.forEach((episode: IEpisode, j: number) => {
+    season.forEach((episode: Episode, j: number) => {
       episodes.push({
         ...episode,
+        episode: j + 1,
         imdbRating: Number(episode.imdbRating),
         season: i + 1,
-        episode: j + 1,
       });
     });
   });
@@ -135,7 +135,7 @@ export async function getEpisodes(imdbID: string) {
   return promise;
 }
 
-export async function search(params: IOMDBConfig) {
+export async function search(params: OMDBConfig) {
   const key = JSON.stringify(params, Object.keys(params).sort());
   if (searchStore.requests.has(key)) {
     return searchStore.requests.get(key);
