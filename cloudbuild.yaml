@@ -8,7 +8,7 @@ steps:
   - name: 'gcr.io/cloud-builders/yarn'
     entrypoint: yarn
     args: ['build-server']
-  - name: 'gcr.io/cloud-builders/gcloud'
+  - name: 'ubuntu'
     entrypoint: bash
     args: ['echo', 'OMDB_API_KEY=$_OMDB_API_KEY', '>', '.env']
   - name: 'gcr.io/cloud-builders/gcloud'
