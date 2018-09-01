@@ -12,4 +12,7 @@ steps:
     entrypoint: echo
     args: ['OMDB_API_KEY=$_OMDB_API_KEY', '>', '.env']
   - name: 'gcr.io/cloud-builders/gcloud'
-    args: ['app', 'deploy', '--version', '$SHORT_SHA']
+    entrypoint: rm
+    args: ['cloudbuild.yaml']
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args: ['app', 'deploy', '--version', '$SHORT_SHA', '--quiet']
