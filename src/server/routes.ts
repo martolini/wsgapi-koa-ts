@@ -3,10 +3,10 @@ import * as omdb from './omdbsdk';
 
 const router = new Router();
 
-router.get('/search', async ctx => {
+router.get('/shows/search', async ctx => {
   const { s } = ctx.query;
   if (!s) {
-    ctx.throw('Pass a search parameter with ?s=', 400);
+    ctx.throw('Send a search query with ?s=', 400);
   }
   ctx.body = await omdb.search(ctx.query);
 });
@@ -16,13 +16,12 @@ const getShow = async (ctx: Router.IRouterContext) => {
   if (id === undefined) {
     ctx.throw('No ID specified', 400);
   }
-  ctx.body = await omdb.getEpisodes(id);
+  ctx.body = {
+    data: await omdb.getShow(id),
+  };
 };
 
-router.get('/show/:id', getShow);
-
-// Backwards compability
-router.get('/get/:id', getShow);
+router.get('/shows/:id', getShow);
 
 router.get('/health', async ctx => {
   ctx.body = {

@@ -55,14 +55,14 @@ function configure(opts: OMDBConfig): OMDBConfig {
   return instance.defaults.params;
 }
 
-async function _search(params: OMDBConfig): Promise<OMDBSearchResult> {
+async function _search(params: OMDBConfig): Promise<SearchResult[]> {
   const result = await instance({
     method: 'get',
     params,
   });
-  const deprecatedBody = result.data;
-  const data: SearchResult[] = deprecatedBody.Search
-    ? deprecatedBody.Search.map((elem: OMDBSearchResult) => ({
+  const body = result.data;
+  const data: SearchResult[] = body.Search
+    ? body.Search.map((elem: OMDBSearchResult) => ({
         imdbID: elem.imdbID,
         posterURL: elem.Poster,
         title: elem.Title,
@@ -70,10 +70,7 @@ async function _search(params: OMDBConfig): Promise<OMDBSearchResult> {
         year: elem.Year,
       }))
     : [];
-  return {
-    ...deprecatedBody,
-    data,
-  };
+  return data;
 }
 
 interface Episode {
@@ -82,7 +79,7 @@ interface Episode {
   episode: number;
 }
 
-async function _getEpisodes(imdbID: string) {
+async function _getShow(imdbID: string) {
   const result = await instance({
     method: 'get',
     params: {
@@ -119,14 +116,14 @@ async function _getEpisodes(imdbID: string) {
   };
 }
 
-export async function getEpisodes(imdbID: string) {
+export async function getShow(imdbID: string) {
   if (episodeStore.requests.has(imdbID)) {
     return episodeStore.requests.get(imdbID);
   }
   if (episodeStore.results.has(imdbID)) {
     return episodeStore.results.get(imdbID);
   }
-  const promise = _getEpisodes(imdbID).then(res => {
+  const promise = _getShow(imdbID).then(res => {
     episodeStore.results = episodeStore.results.set(imdbID, res);
     episodeStore.requests = episodeStore.requests.delete(imdbID);
     return res;

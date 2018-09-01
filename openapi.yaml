@@ -1,0 +1,117 @@
+openapi: 3.0.0
+info:
+  description: Api for wsg.msroed.io
+  version: 0.0.1
+  title: WSG
+  contact:
+    email: msroed@gmail.com
+
+servers:
+  - url: https://api.wsg.msroed.app/
+paths:
+  /shows/search:
+    get:
+      tags:
+        - shows
+      operationId: search
+      summary: Information about shows
+      parameters:
+        - name: query
+          in: query
+          schema:
+            type: string
+          required: true
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    imdbID:
+                      type: string
+                    posterURL:
+                      type: string
+                    title:
+                      type: string
+                    year:
+                      type: string
+                    type:
+                      type: string
+  /shows/{imdbID}:
+    get:
+      tags:
+        - shows
+      operationId: getShow
+      summary: Get a single show and its episodes
+      parameters:
+        - name: imdbID
+          in: path
+          required: true
+          description: The imdbID of the show to retrieve
+          schema:
+            type: string
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  Title:
+                    type: string
+                  Year:
+                    type: string
+                  Rated:
+                    type: string
+                  Runtime:
+                    type: string
+                  Genre:
+                    type: string
+                  Director:
+                    type: string
+                  Writer:
+                    type: string
+                  Actors:
+                    type: string
+                  Plot:
+                    type: string
+                  Language:
+                    type: string
+                  Country:
+                    type: string
+                  Awards:
+                    type: string
+                  Poster:
+                    type: string
+                  imdbRating:
+                    type: string
+                  imdbVotes:
+                    type: string
+                  imdbID:
+                    type: string
+                  Type:
+                    type: string
+                  totalSeasons:
+                    type: string
+                  episodes:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        Title:
+                          type: string
+                        Released:
+                          type: string
+                        episode:
+                          type: number
+                        imdbID:
+                          type: string
+                        imdbRating:
+                          type: number
+                        season:
+                          type: number
