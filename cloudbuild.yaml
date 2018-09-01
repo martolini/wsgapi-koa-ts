@@ -1,7 +1,7 @@
 steps:
   - name: 'node:10'
     entrypoint: yarn
-    args: ['install', '--registry', 'https://yarn.npmjs.org']
+    args: ['install']
   - name: 'node:10'
     entrypoint: yarn
     args: ['test']
