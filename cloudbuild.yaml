@@ -1,9 +1,10 @@
 steps:
   - name: 'node:9'
     entrypoint: yarn
-    args: ['install']
+    args: ['install', '--registry', 'https://yarn.npmjs.org']
   - name: 'node:9'
     entrypoint: yarn
     args: ['test']
-  - name: gcr.io/cloud-builders/gcloud
-    args: ['app', 'deploy']
+  - name: 'node:9'
+    entrypoint: yarn
+    args: ['deploy']
