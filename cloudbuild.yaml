@@ -9,6 +9,9 @@ steps:
     entrypoint: yarn
     args: ['build-server']
   - name: 'ubuntu'
+    entrypoint: cat
+    args: ['.env']
+  - name: 'ubuntu'
     entrypoint: 'bash'
     args:
       - '-c'
@@ -17,5 +20,8 @@ steps:
   - name: 'ubuntu'
     entrypoint: rm
     args: ['cloudbuild.yaml']
+  - name: 'ubuntu'
+    entrypoint: cat
+    args: ['.env']
   - name: 'gcr.io/cloud-builders/gcloud'
-    args: ['app', 'deploy', '--version', '$SHORT_SHA', '--quiet']
+    args: ['app', 'deploy', '--version', '$SHORT_SHA', '--quiet', '--verbose']
