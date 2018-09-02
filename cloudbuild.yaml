@@ -21,4 +21,4 @@ steps:
     entrypoint: cat
     args: ['.env']
   - name: 'gcr.io/cloud-builders/gcloud'
-    args: ['app', 'deploy', '--version', '$SHORT_SHA', '--quiet', '--verbose']
+    args: ['app', 'deploy', '--version', '$SHORT_SHA', '--quiet', '--verbosity=debug']
