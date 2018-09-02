@@ -17,5 +17,8 @@ steps:
   - name: 'ubuntu'
     entrypoint: cat
     args: ['.env']
+  - name: 'ubuntu'
+    entrypoint: rm
+    args: ['cloudbuild.yaml']
   - name: 'gcr.io/cloud-builders/gcloud'
     args: ['app', 'deploy', '--version', '$SHORT_SHA', '--quiet']
