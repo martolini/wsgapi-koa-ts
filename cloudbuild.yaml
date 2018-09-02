@@ -15,9 +15,6 @@ steps:
       - |
         echo "OMBD_API_KEY=$_OMDB_API_KEY" > .env
   - name: 'ubuntu'
-    entrypoint: rm
-    args: ['cloudbuild.yaml']
-  - name: 'ubuntu'
     entrypoint: cat
     args: ['.env']
   - name: 'gcr.io/cloud-builders/gcloud'
