@@ -28,11 +28,15 @@ const getShow = async (ctx: Router.IRouterContext) => {
 
 router.get('/shows/:id', getShow);
 
-router.get('/health', async ctx => {
+async function probe(ctx: Router.IRouterContext) {
   ctx.body = {
     data: true,
   };
-});
+}
+
+router.get('/health', probe);
+router.get('/liveness_check', probe);
+router.get('/readiness_check', probe);
 
 router.get('/', async ctx => {
   ctx.body = { version: process.env.API_VERSION || 'dev' };
