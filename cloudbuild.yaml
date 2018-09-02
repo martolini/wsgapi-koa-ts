@@ -9,9 +9,6 @@ steps:
     entrypoint: yarn
     args: ['build-server']
   - name: 'ubuntu'
-    entrypoint: cat
-    args: ['.env']
-  - name: 'ubuntu'
     entrypoint: 'bash'
     args:
       - '-c'
