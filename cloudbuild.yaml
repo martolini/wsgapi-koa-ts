@@ -9,9 +9,12 @@ steps:
     entrypoint: yarn
     args: ['build-server']
   - name: 'ubuntu'
-    entrypoint: echo
-    args: ['OMDB_API_KEY=$_OMDB_API_KEY', '>', '.env']
-  - name: 'gcr.io/cloud-builders/gcloud'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        echo "OMBD_API_KEY=$_OMDB_API_KEY" > .env
+  - name: 'ubuntu'
     entrypoint: rm
     args: ['cloudbuild.yaml']
   - name: 'gcr.io/cloud-builders/gcloud'
